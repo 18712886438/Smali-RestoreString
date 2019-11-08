@@ -75,9 +75,11 @@ public class Main {
 				Pattern constPtn = Pattern.compile("const-string "+reg+", \"(.*)\"");
 				int i1 = i - 1;
 				code = codes.get(i1);
-				while(code.indexOf("const-string " + reg) == -1){
+
+				if (code.indexOf("const-string " + reg) == -1){
 					i1--;
 					code = codes.get(i1);
+					if (code.indexOf("const-string " + reg) == -1) continue;
 				}
 				mtc = constPtn.matcher(code);
 				if(!mtc.find()){
@@ -89,9 +91,10 @@ public class Main {
 				
 				int i2 = i + 1;
 				code = codes.get(i2);
-				while(code.indexOf("move-result-object " + reg) == -1){
+				if (code.indexOf("move-result-object " + reg) == -1){
 					i2++;
 					code = codes.get(i2);
+					if (code.indexOf("move-result-object " + reg) == -1) continue;
 				}
 				codes.set(i, "");
 				codes.set(i1, "");
